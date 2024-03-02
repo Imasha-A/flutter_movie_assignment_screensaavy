@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
 
@@ -24,7 +25,86 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 16),
+              const Text('Find Movies and TV shows',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  textAlign: TextAlign.center),
+              const SizedBox(height: 16),
+              SizedBox(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchByTitle()));
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Row(
+                            children: [
+                              Text(
+                                'By title name',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              )
+                            ],
+                          )),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchByActor()));
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Row(
+                            children: [
+                              Text(
+                                'By actor name',
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
+                              )
+                            ],
+                          )),
+                    )
+                  ],
+                ),
+              ),
+              const SizedBox(height: 16),
+              const Text('Whats on at the cinema',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              const MovieScrollWidget(),
+              const SizedBox(height: 16),
+              const Text('Whats on TV tonight',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              const TvShowScrollWidget(),
+              const SizedBox(height: 16),
+              const Text('Children friendly movies',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              const MovieScrollWidget(),
+              const SizedBox(height: 16),
+              const Text('Best movies this year',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              const MovieScrollWidget(),
+              const SizedBox(height: 16),
+              const Text('Highest grossing movies of all time',
+                  style: TextStyle(fontSize: 20, color: Colors.white)),
+              const MovieScrollWidget(),
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
@@ -39,5 +119,79 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+class MovieScrollWidget extends StatelessWidget {
+  const MovieScrollWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: double.infinity,
+        child: CarouselSlider.builder(
+            itemCount: 25,
+            itemBuilder: (context, index, realIndex) {
+              return Container(height: 200, width: 200, color: Colors.red);
+            },
+            options: CarouselOptions(
+              height: 200,
+              autoPlay: true,
+              viewportFraction: 0.5,
+              enlargeCenterPage: true,
+              autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
+              autoPlayAnimationDuration: const Duration(seconds: 1),
+            )));
+  }
+}
+
+class TvShowScrollWidget extends StatelessWidget {
+  const TvShowScrollWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: double.infinity,
+        child: CarouselSlider.builder(
+            itemCount: 25,
+            itemBuilder: (context, index, realIndex) {
+              return Container(height: 200, width: 200, color: Colors.blue);
+            },
+            options: CarouselOptions(
+              height: 200,
+              autoPlay: true,
+              viewportFraction: 0.5,
+              enlargeCenterPage: true,
+              autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
+              autoPlayAnimationDuration: const Duration(seconds: 1),
+            )));
+  }
+}
+
+class SearchByTitle extends StatefulWidget {
+  const SearchByTitle({super.key});
+
+  @override
+  State<SearchByTitle> createState() => _SearchByTitleState();
+}
+
+class _SearchByTitleState extends State<SearchByTitle> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+class SearchByActor extends StatefulWidget {
+  const SearchByActor({super.key});
+
+  @override
+  State<SearchByActor> createState() => _SearchByActorState();
+}
+
+class _SearchByActorState extends State<SearchByActor> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
