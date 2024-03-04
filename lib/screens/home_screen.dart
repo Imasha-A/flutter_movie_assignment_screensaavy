@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
@@ -223,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
+      bottomNavigationBar: const MyNavigationBar(),
     );
   }
 }
