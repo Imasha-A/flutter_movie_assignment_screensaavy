@@ -6,7 +6,7 @@ class TvShowInformation {
   String? posterPath;
   String? firstAir;
   String? name;
-  double voteAverage;
+  double? voteAverage;
 
   TvShowInformation(
       {required this.backdropPath,

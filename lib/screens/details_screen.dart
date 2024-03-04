@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 
-class TvShowDetails extends StatelessWidget {
-  const TvShowDetails({super.key, required this.tvShow});
-  final TvShowInformation tvShow;
+class MovieDetails extends StatelessWidget {
+  const MovieDetails({super.key, required this.movie});
+  final MovieInformation movie;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,9 @@ class TvShowDetails extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         title: Text(
-          tvShow.name ?? 'No title',
+          movie.title != null && movie.title!.isNotEmpty
+              ? movie.title!
+              : 'No title',
           style: const TextStyle(
               fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
         ),
@@ -27,8 +30,28 @@ class TvShowDetails extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.network('${Api.imagePath}${tvShow.posterPath}',
-                    filterQuality: FilterQuality.high, fit: BoxFit.fill),
+                Container(
+                  width: 250,
+                  height: 500,
+                  decoration: BoxDecoration(
+                    image:
+                        movie.posterPath != null && movie.posterPath!.isNotEmpty
+                            ? DecorationImage(
+                                fit: BoxFit.contain,
+                                image: NetworkImage(
+                                    '${Api.imagePath}${movie.posterPath}'),
+                              )
+                            : null,
+                  ),
+                  child: movie.posterPath != null && movie.posterPath!.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No Image Available',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : null,
+                ),
                 const SizedBox(height: 8.0),
                 const Text(
                   'Overview:',
@@ -36,15 +59,10 @@ class TvShowDetails extends StatelessWidget {
                 ),
                 const SizedBox(height: 8.0),
                 Text(
-                  tvShow.overview != null && tvShow.overview!.isNotEmpty
-                      ? tvShow.overview!
+                  movie.overview != null && movie.overview!.isNotEmpty
+                      ? movie.overview!
                       : 'No overview',
-                  style: TextStyle(
-                      fontSize:
-                          tvShow.overview != null && tvShow.overview!.isNotEmpty
-                              ? 26
-                              : 26,
-                      color: Colors.white),
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
                 ),
                 const SizedBox(height: 8.0),
                 SizedBox(
@@ -63,7 +81,125 @@ class TvShowDetails extends StatelessWidget {
                             style: TextStyle(fontSize: 18, color: Colors.white),
                           ),
                           Text(
-                            '${tvShow.voteAverage.toStringAsFixed(1)}/10',
+                            '${(movie.voteAverage ?? 0.0) > 0 ? movie.voteAverage!.toStringAsFixed(1) : 'None'}/10',
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Row(
+                          children: [
+                            const Text(
+                              'Released Date: ',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.white),
+                            ),
+                            Text(
+                              movie.releaseDate != null &&
+                                      movie.releaseDate!.isNotEmpty
+                                  ? movie.releaseDate!
+                                  : 'None',
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.white),
+                            ),
+                          ],
+                        )),
+                  ],
+                ))
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TvShowDetails extends StatelessWidget {
+  const TvShowDetails({super.key, required this.tvShow});
+  final TvShowInformation tvShow;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          tvShow.name != null && tvShow.name!.isNotEmpty
+              ? tvShow.name!
+              : 'No title',
+          style: const TextStyle(
+              fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+        centerTitle: true,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 250,
+                  height: 500,
+                  decoration: BoxDecoration(
+                    image: tvShow.posterPath != null &&
+                            tvShow.posterPath!.isNotEmpty
+                        ? DecorationImage(
+                            fit: BoxFit.contain,
+                            image: NetworkImage(
+                                '${Api.imagePath}${tvShow.posterPath}'),
+                          )
+                        : null,
+                  ),
+                  child: tvShow.posterPath != null && tvShow.posterPath!.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No Image Available',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      : null,
+                ),
+                const SizedBox(height: 8.0),
+                const Text(
+                  'Overview:',
+                  style: TextStyle(fontSize: 26.0, color: Colors.white),
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  tvShow.overview != null && tvShow.overview!.isNotEmpty
+                      ? tvShow.overview!
+                      : 'No overview',
+                  style: const TextStyle(fontSize: 26, color: Colors.white),
+                ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                    child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'Rating: ',
+                            style: TextStyle(fontSize: 18, color: Colors.white),
+                          ),
+                          Text(
+                            '${(tvShow.voteAverage ?? 0.0) > 0 ? tvShow.voteAverage!.toStringAsFixed(1) : 'None'}/10',
                             style: const TextStyle(
                                 fontSize: 18, color: Colors.white),
                           ),
@@ -83,7 +219,10 @@ class TvShowDetails extends StatelessWidget {
                                   TextStyle(fontSize: 18, color: Colors.white),
                             ),
                             Text(
-                              tvShow.firstAir ?? 'No first air details',
+                              tvShow.firstAir != null &&
+                                      tvShow.firstAir!.isNotEmpty
+                                  ? tvShow.firstAir!
+                                  : 'None',
                               style: const TextStyle(
                                   fontSize: 18, color: Colors.white),
                             ),

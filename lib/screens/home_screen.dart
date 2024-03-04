@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/details_screen.dart';
@@ -13,11 +14,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<MovieInformation>> onCinema;
   late Future<List<TvShowInformation>> onTvTonight;
+  late Future<List<MovieInformation>> kidsMovies;
+  late Future<List<MovieInformation>> topRatedMovies;
+  late Future<List<MovieInformation>> mostPopularMovies;
+
   @override
   void initState() {
     super.initState();
+    onCinema = Api().getCinema();
     onTvTonight = Api().getTVTonight();
+    kidsMovies = Api().getAnimatedMovies();
+    topRatedMovies = Api().getTopRated();
+    mostPopularMovies = Api().getMostPopularMovies();
   }
 
   @override
@@ -98,7 +108,24 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const Text('Whats on at the cinema',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
-              const MovieScrollWidget(),
+              SizedBox(
+                child: FutureBuilder(
+                  future: onCinema,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MovieScrollWidget(
+                        snapshot: snapshot,
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
               const SizedBox(height: 16),
               const Text('Whats on TV tonight',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
@@ -123,15 +150,66 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const Text('Children friendly movies',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
-              const MovieScrollWidget(),
+              SizedBox(
+                child: FutureBuilder(
+                  future: kidsMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MovieScrollWidget(
+                        snapshot: snapshot,
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
               const SizedBox(height: 16),
               const Text('Best movies this year',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
-              const MovieScrollWidget(),
+              SizedBox(
+                child: FutureBuilder(
+                  future: mostPopularMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MovieScrollWidget(
+                        snapshot: snapshot,
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
               const SizedBox(height: 16),
               const Text('Highest grossing movies of all time',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
-              const MovieScrollWidget(),
+              SizedBox(
+                child: FutureBuilder(
+                  future: topRatedMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error.toString()),
+                      );
+                    } else if (snapshot.hasData) {
+                      return MovieScrollWidget(
+                        snapshot: snapshot,
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
@@ -150,25 +228,71 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class MovieScrollWidget extends StatelessWidget {
-  const MovieScrollWidget({super.key});
+  const MovieScrollWidget({super.key, required this.snapshot});
+  final AsyncSnapshot snapshot;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         width: double.infinity,
         child: CarouselSlider.builder(
-            itemCount: 25,
-            itemBuilder: (context, index, realIndex) {
-              return Container(height: 200, width: 200, color: Colors.red);
-            },
-            options: CarouselOptions(
-              height: 200,
-              autoPlay: true,
-              viewportFraction: 0.5,
-              enlargeCenterPage: true,
-              autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
-              autoPlayAnimationDuration: const Duration(seconds: 1),
-            )));
+          itemCount: snapshot.data?.length ?? 0,
+          options: CarouselOptions(
+            height: 200,
+            autoPlay: true,
+            viewportFraction: 0.5,
+            enlargeCenterPage: true,
+            autoPlayCurve: Curves.fastEaseInToSlowEaseOut,
+            autoPlayAnimationDuration: const Duration(seconds: 1),
+          ),
+          itemBuilder: (context, index, realIndex) {
+            final movieInformation = snapshot.data?[index];
+            if (movieInformation != null &&
+                movieInformation.posterPath != null) {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              (MovieDetails(movie: snapshot.data[index]))));
+                },
+                child: SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Image.network(
+                    '${Api.imagePath}${movieInformation.posterPath}',
+                    filterQuality: FilterQuality.high,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              );
+            } else {
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              (MovieDetails(movie: snapshot.data[index]))));
+                },
+                child: SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Container(
+                    color: Colors.grey,
+                    child: const Center(
+                      child: Text('Image not available',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
+        ));
   }
 }
 
