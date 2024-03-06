@@ -23,6 +23,8 @@ class Api {
 
   static const imagePath = 'https://image.tmdb.org/t/p/w500';
 
+  var searchURL = 'https://api.themoviedb.org/3/search/multi?api_key=$apiKey';
+
   Future<List<MovieInformation>> getCinema() async {
     final cinemaResponse = await http.get(Uri.parse(cinemaURL));
     if (cinemaResponse.statusCode == 200) {
@@ -82,6 +84,21 @@ class Api {
       return popularDecodedData
           .map((movie) => MovieInformation.fromJson(movie))
           .toList();
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future<List<dynamic>> searchByTitle(String query) async {
+    final titleSearchResponse =
+        await http.get(Uri.parse('$searchURL&query=$query'));
+    if (titleSearchResponse.statusCode == 200) {
+      final titleSearchDecodedData =
+          json.decode(titleSearchResponse.body)["results"] as List;
+      final titleSearchFilteredData = titleSearchDecodedData.where((result) {
+        return result['media_type'] == 'movie' || result['media_type'] == 'tv';
+      }).toList();
+      return titleSearchFilteredData;
     } else {
       throw Exception("Error");
     }

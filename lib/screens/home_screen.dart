@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
+import 'package:flutter_movie_assignment_screensaavy/screens/search_by_title.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/details_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
@@ -363,20 +364,6 @@ class TvShowScrollWidget extends StatelessWidget {
             }
           },
         ));
-  }
-}
-
-class SearchByTitle extends StatefulWidget {
-  const SearchByTitle({super.key});
-
-  @override
-  State<SearchByTitle> createState() => _SearchByTitleState();
-}
-
-class _SearchByTitleState extends State<SearchByTitle> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
 
