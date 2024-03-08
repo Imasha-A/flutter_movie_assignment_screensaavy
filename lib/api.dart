@@ -15,15 +15,21 @@ class Api {
   static const animatedMoviesURL =
       'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=16&api_key=$apiKey';
 
-  static const topRatedMoviesURL =
-      'https://api.themoviedb.org/3/movie/top_rated?api_key=$apiKey';
+  static const highestGrossingMoviesURL =
+      'https://api.themoviedb.org/3/discover/movie?include_adult=false&sort_by=revenue.desc&api_key=$apiKey';
 
   static const mostPopularMoviesURL =
-      'https://api.themoviedb.org/3/discover/movie?primary_release_year=2023&sort_by=popularity.desc&api_key=$apiKey';
+      'https://api.themoviedb.org/3/discover/movie?primary_release_year=2024&sort_by=popularity.desc&api_key=$apiKey';
 
   static const imagePath = 'https://image.tmdb.org/t/p/w500';
 
   var searchURL = 'https://api.themoviedb.org/3/search/multi?api_key=$apiKey';
+
+  var searchByActorURL =
+      'https://api.themoviedb.org/3/search/person?include_adult=false&api_key=$apiKey';
+
+  var discoverMovieURL =
+      'https://api.themoviedb.org/3/discover/movie?include_adult=false&api_key=$apiKey';
 
   Future<List<MovieInformation>> getCinema() async {
     final cinemaResponse = await http.get(Uri.parse(cinemaURL));
@@ -63,12 +69,13 @@ class Api {
     }
   }
 
-  Future<List<MovieInformation>> getTopRated() async {
-    final topRatedResponse = await http.get(Uri.parse(topRatedMoviesURL));
-    if (topRatedResponse.statusCode == 200) {
-      final topRatedDecodedData =
-          json.decode(topRatedResponse.body)["results"] as List;
-      return topRatedDecodedData
+  Future<List<MovieInformation>> getHighestGrossing() async {
+    final highestGrossingResponse =
+        await http.get(Uri.parse(highestGrossingMoviesURL));
+    if (highestGrossingResponse.statusCode == 200) {
+      final highestGrossingDecodedData =
+          json.decode(highestGrossingResponse.body)["results"] as List;
+      return highestGrossingDecodedData
           .map((movie) => MovieInformation.fromJson(movie))
           .toList();
     } else {
@@ -99,6 +106,42 @@ class Api {
         return result['media_type'] == 'movie' || result['media_type'] == 'tv';
       }).toList();
       return titleSearchFilteredData;
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future<List<dynamic>> searchByActor(String query) async {
+    final actorSearchResponse =
+        await http.get(Uri.parse('$searchByActorURL&query=$query'));
+    if (actorSearchResponse.statusCode == 200) {
+      final actorSearchDecodedData =
+          json.decode(actorSearchResponse.body)["results"] as List;
+      return actorSearchDecodedData;
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future<List<dynamic>> discoverMoviesByActor(int actorID) async {
+    final actorMovieResponse =
+        await http.get(Uri.parse('$discoverMovieURL&with_people=$actorID'));
+    if (actorMovieResponse.statusCode == 200) {
+      final actorMovieDecodedData =
+          json.decode(actorMovieResponse.body)["results"] as List;
+      return actorMovieDecodedData;
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future<List<dynamic>> discoverTvShowsByActor(int actorID) async {
+    final actorTvResponse = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/person/$actorID/tv_credits?api_key=$apiKey&include_adult=false'));
+    if (actorTvResponse.statusCode == 200) {
+      final actorTvDecodedData =
+          json.decode(actorTvResponse.body)["cast"] as List;
+      return actorTvDecodedData;
     } else {
       throw Exception("Error");
     }

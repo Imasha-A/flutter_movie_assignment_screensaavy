@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
+import 'package:flutter_movie_assignment_screensaavy/screens/search_by_actor.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/search_by_title.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/details_screen.dart';
@@ -19,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<MovieInformation>> onCinema;
   late Future<List<TvShowInformation>> onTvTonight;
   late Future<List<MovieInformation>> kidsMovies;
-  late Future<List<MovieInformation>> topRatedMovies;
+  late Future<List<MovieInformation>> highestGrossingMovies;
   late Future<List<MovieInformation>> mostPopularMovies;
 
   @override
@@ -28,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     onCinema = Api().getCinema();
     onTvTonight = Api().getTVTonight();
     kidsMovies = Api().getAnimatedMovies();
-    topRatedMovies = Api().getTopRated();
+    highestGrossingMovies = Api().getHighestGrossing();
     mostPopularMovies = Api().getMostPopularMovies();
   }
 
@@ -196,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   style: TextStyle(fontSize: 20, color: Colors.white)),
               SizedBox(
                 child: FutureBuilder(
-                  future: topRatedMovies,
+                  future: highestGrossingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
@@ -364,19 +365,5 @@ class TvShowScrollWidget extends StatelessWidget {
             }
           },
         ));
-  }
-}
-
-class SearchByActor extends StatefulWidget {
-  const SearchByActor({super.key});
-
-  @override
-  State<SearchByActor> createState() => _SearchByActorState();
-}
-
-class _SearchByActorState extends State<SearchByActor> {
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
