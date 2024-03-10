@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
+import 'package:flutter_movie_assignment_screensaavy/screens/watched_list.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 
@@ -111,7 +112,39 @@ class MovieDetails extends StatelessWidget {
                           ],
                         )),
                   ],
-                ))
+                )),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            WatchedListData.watchedListMovies.add(movie);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'Add to watched ',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                                Icon(
+                                  Icons.check_box,
+                                  size: 35,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ]),
+                ),
               ],
             ),
           ),
@@ -229,7 +262,39 @@ class TvShowDetails extends StatelessWidget {
                           ],
                         )),
                   ],
-                ))
+                )),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            WatchedListData.watchedListTvShows.add(tvShow);
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: const Row(
+                              children: [
+                                Text(
+                                  'Add to watched ',
+                                  style: TextStyle(
+                                      fontSize: 18, color: Colors.white),
+                                ),
+                                Icon(
+                                  Icons.check_box,
+                                  size: 35,
+                                  color: Colors.white,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                      ]),
+                ),
               ],
             ),
           ),
