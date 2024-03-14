@@ -1,14 +1,67 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+//class to hold the watched list data from both movies and tv shows
 class WatchedListData {
   static List<MovieInformation> watchedListMovies = [];
   static List<TvShowInformation> watchedListTvShows = [];
+
+  static const String movieKey = 'watchedListMovies';
+  static const String tvShowKey = 'WatchedListTvShows';
+
+  static Future<void> saveData() async {
+    try {
+      final SharedPreferences preferences =
+          await SharedPreferences.getInstance();
+      final List<String> movieJsonList = watchedListMovies
+          .map((movie) => json.encode(movie.toJson()))
+          .toList();
+      final List<String> tvShowJsonList = watchedListTvShows
+          .map((tvShow) => json.encode(tvShow.toJson()))
+          .toList();
+      await preferences.setStringList(movieKey, movieJsonList);
+      await preferences.setStringList(tvShowKey, tvShowJsonList);
+      print('Data successfully saved to shared preferences');
+    } catch (error) {
+      print('Error saving data to shared preferences: $error');
+    }
+  }
+
+  static Future<void> loadData() async {
+    try {
+      final SharedPreferences preferences =
+          await SharedPreferences.getInstance();
+      final List<String>? movieJsonList = preferences.getStringList(movieKey);
+      final List<String>? tvShowJsonList = preferences.getStringList(tvShowKey);
+
+      if (movieJsonList != null) {
+        watchedListMovies = movieJsonList
+            .map((jsonString) =>
+                MovieInformation.fromJson(json.decode(jsonString)))
+            .toList();
+      }
+
+      if (tvShowJsonList != null) {
+        watchedListTvShows = tvShowJsonList
+            .map((jsonString) =>
+                TvShowInformation.fromJson(json.decode(jsonString)))
+            .toList();
+      }
+
+      print('Data successfully loaded from shared preferences');
+    } catch (error) {
+      print('Error loading data from shared preferences: $error');
+    }
+  }
 }
 
+//class to get movie and tv show watched list and display them in a scrollable column format
 class WatchedList extends StatelessWidget {
   const WatchedList({super.key});
 

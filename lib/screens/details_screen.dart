@@ -5,6 +5,7 @@ import 'package:flutter_movie_assignment_screensaavy/screens/watchlist.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 
+//classes to display movie details and tv show details
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key, required this.movie});
   final MovieInformation movie;
@@ -122,6 +123,7 @@ class MovieDetails extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             WatchedListData.watchedListMovies.add(movie);
+                            WatchedListData.saveData();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -147,6 +149,7 @@ class MovieDetails extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             WatchlistData.watchlistMovies.add(movie);
+                            WatchlistData.saveData();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -297,6 +300,7 @@ class TvShowDetails extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             WatchedListData.watchedListTvShows.add(tvShow);
+                            WatchedListData.saveData();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),
@@ -322,6 +326,7 @@ class TvShowDetails extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             WatchlistData.watchlistTvShows.add(tvShow);
+                            WatchlistData.saveData();
                           },
                           child: Container(
                             padding: const EdgeInsets.all(8),

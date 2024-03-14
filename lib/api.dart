@@ -3,6 +3,7 @@ import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+//class for api calls from TMDB
 class Api {
   static const apiKey = '1261df0272d79d11053911503ae5753f';
 

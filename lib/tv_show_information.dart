@@ -1,3 +1,4 @@
+//class for tvshow information
 class TvShowInformation {
   String? backdropPath;
   String? originalName;
@@ -17,6 +18,19 @@ class TvShowInformation {
       required this.firstAir,
       required this.name,
       required this.voteAverage});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "backdrop_path": backdropPath,
+      "original_name": originalName,
+      "overview": overview,
+      "popularity": popularity,
+      "poster_path": posterPath,
+      "first_air_date": firstAir,
+      "name": name,
+      "vote_average": voteAverage,
+    };
+  }
 
   factory TvShowInformation.fromJson(Map<String, dynamic> json) {
     return TvShowInformation(

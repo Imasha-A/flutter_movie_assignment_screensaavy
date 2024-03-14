@@ -10,6 +10,7 @@ import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/details_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 
+//class to display homescreen
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

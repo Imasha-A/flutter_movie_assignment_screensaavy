@@ -1,3 +1,4 @@
+//class for movie information
 class MovieInformation {
   String? title;
   String? originalTitle;
@@ -17,6 +18,19 @@ class MovieInformation {
       required this.posterPath,
       required this.popularity,
       required this.voteAverage});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "title": title,
+      "original_title": originalTitle,
+      "backdrop_path": backdropPath,
+      "overview": overview,
+      "release_date": releaseDate,
+      "poster_path": posterPath,
+      "popularity": popularity,
+      "vote_average": voteAverage,
+    };
+  }
 
   factory MovieInformation.fromJson(Map<String, dynamic> json) {
     return MovieInformation(

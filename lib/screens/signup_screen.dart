@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/home_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
 
+//class to display sign up widgets and get user credentials for sign up
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
