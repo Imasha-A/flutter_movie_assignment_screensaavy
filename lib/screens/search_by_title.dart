@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
@@ -17,6 +18,7 @@ class _SearchByTitleState extends State<SearchByTitle> {
   final Api api = Api();
   TextEditingController searchTitleController = TextEditingController();
   List<dynamic> searchTitleResults = [];
+  String sortOrder = 'Ascending';
 
   Future<void> runTitleSearch(String query) async {
     bool isConnected = await checkInternetConnectivity();
@@ -32,9 +34,33 @@ class _SearchByTitleState extends State<SearchByTitle> {
       List<dynamic> results = await api.searchByTitle(query);
       setState(() {
         searchTitleResults = results;
+        handleSortOrderChange(sortOrder);
       });
     } catch (error) {
       print("Error: $error");
+    }
+  }
+
+  void handleSortOrderChange(String? value) {
+    if (value != null) {
+      setState(() {
+        sortOrder = value;
+        searchTitleResults.sort((a, b) {
+          String titleA = a['title'] ?? '';
+          String nameA = a['name'] ?? '';
+          String titleB = b['title'] ?? '';
+          String nameB = b['name'] ?? '';
+
+          String aCombined = titleA.isNotEmpty ? titleA : nameA;
+          String bCombined = titleB.isNotEmpty ? titleB : nameB;
+
+          if (sortOrder == 'Ascending') {
+            return aCombined.compareTo(bCombined);
+          } else {
+            return bCombined.compareTo(aCombined);
+          }
+        });
+      });
     }
   }
 
@@ -69,6 +95,41 @@ class _SearchByTitleState extends State<SearchByTitle> {
                   await runTitleSearch(query);
                 }
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                const Text(
+                  'Sort by: ',
+                  style: TextStyle(color: Colors.red),
+                ),
+                Container(
+                  color: Colors.black,
+                  child: DropdownButton<String>(
+                    value: sortOrder,
+                    onChanged: handleSortOrderChange,
+                    items: const <DropdownMenuItem<String>>[
+                      DropdownMenuItem(
+                        value: 'Ascending',
+                        child: Text(
+                          'Ascending',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      DropdownMenuItem(
+                        value: 'Descending',
+                        child: Text(
+                          'Descending',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
