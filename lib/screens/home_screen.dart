@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
@@ -216,10 +217,13 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()));
+                    FirebaseAuth.instance.signOut().then((value) {
+                      print("Signed Out");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreen()));
+                    });
                   },
                   child: const Text('Logout')),
             ],

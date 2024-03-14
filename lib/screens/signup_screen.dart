@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/home_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/login_screen.dart';
@@ -44,10 +45,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 30,
                 ),
                 buttonFormat('Sign up', () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                  FirebaseAuth.instance
+                      .createUserWithEmailAndPassword(
+                          email: emailTextController.text,
+                          password: passwordTextController.text)
+                      .then((value) {
+                    print("Created new account");
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                  }).onError((error, stackTrace) {
+                    print("Error ${error.toString()}");
+                  });
                 }),
                 const SizedBox(
                   height: 30,

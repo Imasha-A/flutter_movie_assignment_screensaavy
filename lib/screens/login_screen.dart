@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/home_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/signup_screen.dart';
@@ -10,7 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController userNameTextController = TextEditingController();
+  TextEditingController emailTextController = TextEditingController();
   TextEditingController passwordTextController = TextEditingController();
 
   @override
@@ -26,8 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                inputText('Enter Username', Icons.person_outline, false,
-                    userNameTextController),
+                inputText('Enter Email', Icons.person_outline, false,
+                    emailTextController),
                 const SizedBox(
                   height: 30,
                 ),
@@ -36,11 +37,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 30,
                 ),
-                buttonFormat('Login', () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()));
+                buttonFormat('Login', () async {
+                  try {
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: emailTextController.text,
+                        password: passwordTextController.text);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                  } catch (error) {
+                    if (error is FirebaseAuthException) {
+                      print(
+                          "Firebase Authentication exception: ${error.message}");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Error: ${error.message}"),
+                        ),
+                      );
+                    } else {
+                      print("Error: ${error.toString()}");
+                    }
+                  }
                 }),
                 const SizedBox(
                   height: 50,
