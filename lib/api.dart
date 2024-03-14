@@ -33,94 +33,130 @@ class Api {
       'https://api.themoviedb.org/3/discover/movie?include_adult=false&api_key=$apiKey';
 
   Future<List<MovieInformation>> getCinema() async {
-    final cinemaResponse = await http.get(Uri.parse(cinemaURL));
-    if (cinemaResponse.statusCode == 200) {
-      final cinemaDecodedData =
-          json.decode(cinemaResponse.body)["results"] as List;
-      return cinemaDecodedData
-          .map((movie) => MovieInformation.fromJson(movie))
-          .toList();
-    } else {
-      throw Exception("Error");
+    try {
+      final cinemaResponse = await http.get(Uri.parse(cinemaURL));
+      if (cinemaResponse.statusCode == 200) {
+        final cinemaDecodedData =
+            json.decode(cinemaResponse.body)["results"] as List;
+        return cinemaDecodedData
+            .map((movie) => MovieInformation.fromJson(movie))
+            .toList();
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<TvShowInformation>> getTVTonight() async {
-    final tvResponse = await http.get(Uri.parse(airingTodayURL));
-    if (tvResponse.statusCode == 200) {
-      final tvDecodedData = json.decode(tvResponse.body)["results"] as List;
-      return tvDecodedData
-          .map((tvShow) => TvShowInformation.fromJson(tvShow))
-          .toList();
-    } else {
-      throw Exception("Error");
+    try {
+      final tvResponse = await http.get(Uri.parse(airingTodayURL));
+      if (tvResponse.statusCode == 200) {
+        final tvDecodedData = json.decode(tvResponse.body)["results"] as List;
+        return tvDecodedData
+            .map((tvShow) => TvShowInformation.fromJson(tvShow))
+            .toList();
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<MovieInformation>> getAnimatedMovies() async {
-    final animationResponse = await http.get(Uri.parse(animatedMoviesURL));
-    if (animationResponse.statusCode == 200) {
-      final animationDecodedData =
-          json.decode(animationResponse.body)["results"] as List;
-      return animationDecodedData
-          .map((movie) => MovieInformation.fromJson(movie))
-          .toList();
-    } else {
-      throw Exception("Error");
+    try {
+      final animationResponse = await http.get(Uri.parse(animatedMoviesURL));
+      if (animationResponse.statusCode == 200) {
+        final animationDecodedData =
+            json.decode(animationResponse.body)["results"] as List;
+        return animationDecodedData
+            .map((movie) => MovieInformation.fromJson(movie))
+            .toList();
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<MovieInformation>> getHighestGrossing() async {
-    final highestGrossingResponse =
-        await http.get(Uri.parse(highestGrossingMoviesURL));
-    if (highestGrossingResponse.statusCode == 200) {
-      final highestGrossingDecodedData =
-          json.decode(highestGrossingResponse.body)["results"] as List;
-      return highestGrossingDecodedData
-          .map((movie) => MovieInformation.fromJson(movie))
-          .toList();
-    } else {
-      throw Exception("Error");
+    try {
+      final highestGrossingResponse =
+          await http.get(Uri.parse(highestGrossingMoviesURL));
+      if (highestGrossingResponse.statusCode == 200) {
+        final highestGrossingDecodedData =
+            json.decode(highestGrossingResponse.body)["results"] as List;
+        return highestGrossingDecodedData
+            .map((movie) => MovieInformation.fromJson(movie))
+            .toList();
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<MovieInformation>> getMostPopularMovies() async {
-    final popularResponse = await http.get(Uri.parse(mostPopularMoviesURL));
-    if (popularResponse.statusCode == 200) {
-      final popularDecodedData =
-          json.decode(popularResponse.body)["results"] as List;
-      return popularDecodedData
-          .map((movie) => MovieInformation.fromJson(movie))
-          .toList();
-    } else {
-      throw Exception("Error");
+    try {
+      final popularResponse = await http.get(Uri.parse(mostPopularMoviesURL));
+      if (popularResponse.statusCode == 200) {
+        final popularDecodedData =
+            json.decode(popularResponse.body)["results"] as List;
+        return popularDecodedData
+            .map((movie) => MovieInformation.fromJson(movie))
+            .toList();
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<dynamic>> searchByTitle(String query) async {
-    final titleSearchResponse =
-        await http.get(Uri.parse('$searchURL&query=$query'));
-    if (titleSearchResponse.statusCode == 200) {
-      final titleSearchDecodedData =
-          json.decode(titleSearchResponse.body)["results"] as List;
-      final titleSearchFilteredData = titleSearchDecodedData.where((result) {
-        return result['media_type'] == 'movie' || result['media_type'] == 'tv';
-      }).toList();
-      return titleSearchFilteredData;
-    } else {
-      throw Exception("Error");
+    try {
+      final titleSearchResponse =
+          await http.get(Uri.parse('$searchURL&query=$query'));
+      if (titleSearchResponse.statusCode == 200) {
+        final titleSearchDecodedData =
+            json.decode(titleSearchResponse.body)["results"] as List;
+        final titleSearchFilteredData = titleSearchDecodedData.where((result) {
+          return result['media_type'] == 'movie' ||
+              result['media_type'] == 'tv';
+        }).toList();
+        return titleSearchFilteredData;
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 
   Future<List<dynamic>> searchByActor(String query) async {
-    final actorSearchResponse =
-        await http.get(Uri.parse('$searchByActorURL&query=$query'));
-    if (actorSearchResponse.statusCode == 200) {
-      final actorSearchDecodedData =
-          json.decode(actorSearchResponse.body)["results"] as List;
-      return actorSearchDecodedData;
-    } else {
-      throw Exception("Error");
+    try {
+      final actorSearchResponse =
+          await http.get(Uri.parse('$searchByActorURL&query=$query'));
+      if (actorSearchResponse.statusCode == 200) {
+        final actorSearchDecodedData =
+            json.decode(actorSearchResponse.body)["results"] as List;
+        return actorSearchDecodedData;
+      } else {
+        throw Exception("Error");
+      }
+    } catch (error) {
+      throw Exception(
+          'Failed to connect to the internet. Check your internet connectiviy');
     }
   }
 

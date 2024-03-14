@@ -119,7 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString()),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return MovieScrollWidget(
@@ -140,7 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString()),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return TvShowScrollWidget(
@@ -161,7 +167,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString()),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return MovieScrollWidget(
@@ -182,7 +191,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString()),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return MovieScrollWidget(
@@ -203,7 +215,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error.toString()),
+                        child: Text(
+                          snapshot.error.toString(),
+                          style: const TextStyle(color: Colors.white),
+                        ),
                       );
                     } else if (snapshot.hasData) {
                       return MovieScrollWidget(

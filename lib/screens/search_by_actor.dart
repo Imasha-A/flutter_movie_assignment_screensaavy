@@ -4,6 +4,7 @@ import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart'
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/details_screen.dart';
 import 'package:flutter_movie_assignment_screensaavy/tv_show_information.dart';
+import 'package:flutter_movie_assignment_screensaavy/network_connectivity.dart';
 
 class SearchByActor extends StatefulWidget {
   const SearchByActor({super.key});
@@ -18,6 +19,15 @@ class _SearchByActorState extends State<SearchByActor> {
   List<dynamic> searchByActorResults = [];
 
   Future<void> runByActorSearch(String query) async {
+    bool isConnected = await checkInternetConnectivity();
+    if (!isConnected) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('No internet connectivity'),
+        ));
+      }
+      return;
+    }
     try {
       List<dynamic> results = await api.searchByActor(query);
       setState(() {
