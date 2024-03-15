@@ -16,6 +16,7 @@ class MyNavigationBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          //home screen button
           GestureDetector(
             onTap: () {
               Navigator.push(context,
@@ -27,6 +28,7 @@ class MyNavigationBar extends StatelessWidget {
               color: Colors.white,
             ),
           ),
+          //watched list button
           GestureDetector(
             onTap: () {
               Navigator.push(context,
@@ -38,6 +40,7 @@ class MyNavigationBar extends StatelessWidget {
               color: Colors.white,
             ),
           ),
+          //watchlist button
           GestureDetector(
             onTap: () {
               Navigator.push(context,

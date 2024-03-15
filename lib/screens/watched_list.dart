@@ -15,13 +15,16 @@ class WatchedListData {
   static const String movieKey = 'watchedListMovies';
   static const String tvShowKey = 'WatchedListTvShows';
 
+  //class to save data to local storage using shared preferences
   static Future<void> saveData() async {
     try {
       final SharedPreferences preferences =
           await SharedPreferences.getInstance();
+      //encoding movie list into json and saving to shared preferences
       final List<String> movieJsonList = watchedListMovies
           .map((movie) => json.encode(movie.toJson()))
           .toList();
+      //encoding tv show list into json and saving to shared preferences
       final List<String> tvShowJsonList = watchedListTvShows
           .map((tvShow) => json.encode(tvShow.toJson()))
           .toList();
@@ -33,10 +36,12 @@ class WatchedListData {
     }
   }
 
+  //class to load data from local storage using shared preferences
   static Future<void> loadData() async {
     try {
       final SharedPreferences preferences =
           await SharedPreferences.getInstance();
+      //retrieving movie and tv show lists json from shared preferences
       final List<String>? movieJsonList = preferences.getStringList(movieKey);
       final List<String>? tvShowJsonList = preferences.getStringList(tvShowKey);
 

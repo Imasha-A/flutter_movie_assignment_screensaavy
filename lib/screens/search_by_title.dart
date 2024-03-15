@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_movie_assignment_screensaavy/api.dart';
 import 'package:flutter_movie_assignment_screensaavy/custom_navigation_bar.dart';
 import 'package:flutter_movie_assignment_screensaavy/movie_information.dart';
@@ -235,18 +234,13 @@ class _SearchByTitleState extends State<SearchByTitle> {
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      const SizedBox(height: 16),
+                                      const SizedBox(height: 25),
                                       Text(
                                         title.isNotEmpty ? title : name,
                                         style: const TextStyle(
                                             color: Colors.white, fontSize: 18),
-                                      ),
-                                      const SizedBox(width: 16),
-                                      Text(
-                                        overview,
-                                        style: const TextStyle(
-                                            color: Colors.white),
                                       ),
                                     ],
                                   ),

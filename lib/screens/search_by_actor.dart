@@ -102,8 +102,14 @@ class _SearchByActorState extends State<SearchByActor> {
                           )
                         : null,
                   ),
-                  title: Text('ID: $actorId'),
-                  subtitle: Text('Name: $actorName'),
+                  title: Text(
+                    'ID: $actorId',
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    'Name: $actorName',
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   onTap: () async {
                     Navigator.push(
                       context,
@@ -324,9 +330,11 @@ class ActorDetails extends StatelessWidget {
                 : null,
           ),
           const SizedBox(height: 20),
-          Text('ID: $actorId', style: const TextStyle(fontSize: 18)),
+          Text('ID: $actorId',
+              style: const TextStyle(fontSize: 18, color: Colors.white)),
           const SizedBox(height: 20),
-          Text('Name: $actorName', style: const TextStyle(fontSize: 18)),
+          Text('Name: $actorName',
+              style: const TextStyle(fontSize: 18, color: Colors.white)),
           const SizedBox(height: 20),
           FutureBuilder(
               future: getMovieAndTvShowWidgets(context),

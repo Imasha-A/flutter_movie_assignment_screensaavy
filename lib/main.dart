@@ -6,12 +6,14 @@ import 'package:flutter_movie_assignment_screensaavy/screens/watched_list.dart';
 import 'package:flutter_movie_assignment_screensaavy/screens/watchlist.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); //intializing firebase
-  await WatchlistData.loadData();
-  await WatchedListData.loadData();
+  WidgetsFlutterBinding.ensureInitialized();
+  //intializing firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await WatchlistData.loadData(); //loading any locally stored watchlist data
+  await WatchedListData
+      .loadData(); //loading any locally stored watched list data
   runApp(const MainApp());
 }
 
@@ -23,7 +25,11 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Assignment',
-      theme: ThemeData(scaffoldBackgroundColor: Colors.black),
+      theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.red),
+          ),
+          scaffoldBackgroundColor: Colors.black),
       home: const LoginScreen(),
     );
   }
