@@ -113,6 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 16),
               const Text('Whats on at the cinema',
                   style: TextStyle(fontSize: 20, color: Colors.white)),
+              //calls future builder and carousel sliders to display information from the api calls
               SizedBox(
                 child: FutureBuilder(
                   future: onCinema,
@@ -251,6 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+//widget for carousel slider that displays movie image
 class MovieScrollWidget extends StatelessWidget {
   const MovieScrollWidget({super.key, required this.snapshot});
   final AsyncSnapshot snapshot;
@@ -320,6 +322,7 @@ class MovieScrollWidget extends StatelessWidget {
   }
 }
 
+//widget for carousel slider that displays tvshow image
 class TvShowScrollWidget extends StatelessWidget {
   const TvShowScrollWidget({super.key, required this.snapshot});
   final AsyncSnapshot snapshot;

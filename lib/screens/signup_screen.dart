@@ -29,6 +29,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Column(
+              //displaying all elements in a colomn format for better readability and format
               children: <Widget>[
                 logoSetup('images/ScreenSaavyLogo.png'),
                 const SizedBox(

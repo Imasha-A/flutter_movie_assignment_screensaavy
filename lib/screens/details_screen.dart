@@ -16,6 +16,7 @@ class MovieDetails extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        //displays movie title
         title: Text(
           movie.title != null && movie.title!.isNotEmpty
               ? movie.title!
@@ -36,6 +37,7 @@ class MovieDetails extends StatelessWidget {
                 Container(
                   width: 250,
                   height: 500,
+                  //displays movie image
                   decoration: BoxDecoration(
                     image:
                         movie.posterPath != null && movie.posterPath!.isNotEmpty
@@ -56,6 +58,7 @@ class MovieDetails extends StatelessWidget {
                       : null,
                 ),
                 const SizedBox(height: 8.0),
+                //displays movie overview
                 const Text(
                   'Overview:',
                   style: TextStyle(fontSize: 26.0, color: Colors.white),
@@ -68,6 +71,7 @@ class MovieDetails extends StatelessWidget {
                   style: const TextStyle(fontSize: 26, color: Colors.white),
                 ),
                 const SizedBox(height: 8.0),
+                //makes row to display movie rating and released dates
                 SizedBox(
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,6 +120,7 @@ class MovieDetails extends StatelessWidget {
                   ],
                 )),
                 const SizedBox(height: 8.0),
+                //makes row to display watched list button and watchlist buttons which pass the movie to the respective pages
                 SizedBox(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -193,6 +198,7 @@ class TvShowDetails extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
+        //displays text
         title: Text(
           tvShow.name != null && tvShow.name!.isNotEmpty
               ? tvShow.name!
@@ -214,6 +220,7 @@ class TvShowDetails extends StatelessWidget {
                   width: 250,
                   height: 500,
                   decoration: BoxDecoration(
+                    //displays image
                     image: tvShow.posterPath != null &&
                             tvShow.posterPath!.isNotEmpty
                         ? DecorationImage(
@@ -233,6 +240,7 @@ class TvShowDetails extends StatelessWidget {
                       : null,
                 ),
                 const SizedBox(height: 8.0),
+                //displays overview
                 const Text(
                   'Overview:',
                   style: TextStyle(fontSize: 26.0, color: Colors.white),
@@ -254,6 +262,7 @@ class TvShowDetails extends StatelessWidget {
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.white),
                           borderRadius: BorderRadius.circular(10)),
+                      //row displays rating and firest air date
                       child: Row(
                         children: [
                           const Text(
@@ -293,6 +302,7 @@ class TvShowDetails extends StatelessWidget {
                   ],
                 )),
                 const SizedBox(height: 8.0),
+                //makes row to display watched list button and watchlist buttons which pass the tvshow to the respective pages
                 SizedBox(
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

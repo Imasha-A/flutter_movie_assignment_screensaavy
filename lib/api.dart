@@ -5,6 +5,7 @@ import 'dart:convert';
 
 //class for api calls from TMDB
 class Api {
+  //api key and api calls
   static const apiKey = '1261df0272d79d11053911503ae5753f';
 
   static const cinemaURL =
@@ -32,6 +33,7 @@ class Api {
   var discoverMovieURL =
       'https://api.themoviedb.org/3/discover/movie?include_adult=false&api_key=$apiKey';
 
+  //functions that get all information and send infromation to TMDB
   Future<List<MovieInformation>> getCinema() async {
     try {
       final cinemaResponse = await http.get(Uri.parse(cinemaURL));

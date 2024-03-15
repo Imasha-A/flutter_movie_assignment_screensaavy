@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
             iconTheme: IconThemeData(color: Colors.red),
           ),
           scaffoldBackgroundColor: Colors.black),
-      home: const LoginScreen(),
+      home: const LoginScreen(), //runs application starting from login screen
     );
   }
 }

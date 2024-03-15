@@ -22,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            //displaying all elements in a colomn format for better readability and format
             child: Column(
               children: <Widget>[
                 logoSetup('images/ScreenSaavyLogo.png'),
@@ -39,6 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 30,
                 ),
                 buttonFormat('Login', () async {
+                  //authenticating with firebase
                   try {
                     await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: emailTextController.text,
@@ -74,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
+//widget for logo setup
 Image logoSetup(String imageName) {
   return Image.asset(
     imageName,
@@ -83,6 +86,7 @@ Image logoSetup(String imageName) {
   );
 }
 
+//widget to hold the user input texts
 TextField inputText(String text, IconData icon, bool isPassword,
     TextEditingController controller) {
   return TextField(
@@ -111,6 +115,7 @@ TextField inputText(String text, IconData icon, bool isPassword,
   );
 }
 
+//widget holds the button format
 Widget buttonFormat(String buttonText, VoidCallback onPressed) {
   return ElevatedButton(
     onPressed: onPressed,
@@ -138,6 +143,7 @@ Widget buttonFormat(String buttonText, VoidCallback onPressed) {
   );
 }
 
+//displaying elements in a colomn format for better readability and format
 Column signUpOption(BuildContext context) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,

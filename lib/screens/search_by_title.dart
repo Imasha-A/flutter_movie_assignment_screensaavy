@@ -18,7 +18,7 @@ class _SearchByTitleState extends State<SearchByTitle> {
   TextEditingController searchTitleController = TextEditingController();
   List<dynamic> searchTitleResults = [];
   String sortOrder = 'Ascending';
-
+  //searches for the title name the use has input
   Future<void> runTitleSearch(String query) async {
     bool isConnected = await checkInternetConnectivity();
     if (!isConnected) {
@@ -40,6 +40,7 @@ class _SearchByTitleState extends State<SearchByTitle> {
     }
   }
 
+  //sorts the title name results dpending on users selection
   void handleSortOrderChange(String? value) {
     if (value != null) {
       setState(() {
@@ -70,6 +71,7 @@ class _SearchByTitleState extends State<SearchByTitle> {
         title: const Text('Search By Title'),
       ),
       body: Column(
+        //displaying title name and image in a colomn format for better readability and format
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),

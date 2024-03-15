@@ -17,7 +17,7 @@ class _SearchByActorState extends State<SearchByActor> {
   final Api api = Api();
   TextEditingController searchByActorController = TextEditingController();
   List<dynamic> searchByActorResults = [];
-
+  //runs search query with the user input
   Future<void> runByActorSearch(String query) async {
     bool isConnected = await checkInternetConnectivity();
     if (!isConnected) {
@@ -45,6 +45,7 @@ class _SearchByActorState extends State<SearchByActor> {
         title: const Text('Search By Actor'),
       ),
       body: Column(
+        //displays the actor infromation in a coloumn format
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -134,6 +135,7 @@ class _SearchByActorState extends State<SearchByActor> {
   }
 }
 
+//class that holds the actor details, movies they have been in and tv shows they have been in
 class ActorDetails extends StatelessWidget {
   final int actorId;
   final String actorName;
